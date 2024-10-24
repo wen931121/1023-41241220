@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打磚塊遊戲</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0; /* 遊戲背景顏色 */
+            position: relative; /* 使 body 為定位參考 */
+        }
+        canvas {
+            display: none; /* 開始時隱藏畫布 */
+            border: 1px solid #0095DD;
+        }
+        #difficultyMenu {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        #gameOverMenu {
+            display: none; /* 開始時隱藏遊戲結束介面 */
+            flex-direction: column;
+            align-items: center;
+        }
+        #scoreDisplay {
+            display: none; /* 開始時隱藏分數顯示 */
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        #continueButton {
+            display: none; /* 開始時隱藏繼續按鈕 */
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        #timerDisplay {
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            font-size: 18px;
+            color: red;
+            display: none; /* 初始時隱藏倒數計時 */
+        }
+        #gameIntro {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        #introText {
+            display: none; /* 初始隱藏介紹文本 */
+            margin-top: 10px;
+            font-size: 16px;
+            text-align: center;
+        }
+        #infoIcon {
+            position: absolute; /* 絕對定位 */
+            top: 20px; /* 右上角距上方的距離 */
+            right: 20px; /* 右上角距右邊的距離 */
+            font-size: 24px; /* 字體大小 */
+            cursor: pointer; /* 游標樣式 */
+        }
+    </style>
+</head>
+<body>
+    <div id="scoreDisplay"></div> <!-- 分數顯示 -->
+    <button id="continueButton">繼續</button> <!-- 繼續按鈕 -->
+
+    <span id="infoIcon">❗</span> <!-- 驚嘆號圖示 -->
+    <div id="introText">
+        <p>遊玩須知:
+            開始遊戲後按滑鼠左鍵開始
+            分數到達 500、1000、3000時生命值會+1
+            中等和困難有紅色的方塊，需打擊兩次才會消除，當紅色方塊變為藍色時會掉下道具
+            黃色:橫桿變長
+            紅色:橫桿變短
+            按空格可以跳躍喔!
+        </p>
+    </div>
+
+    <div id="difficultyMenu">
+        <h1>選擇難度</h1>
+        <button onclick="setDifficulty('easy')">簡單</button>
+        <button onclick="setDifficulty('medium')">中等</button>
+        <button onclick="setDifficulty('hard')">困難</button>
+        <button onclick="setDifficulty('hardTimed')">困難計時</button> <!-- 新增困難計時按鈕 -->
+        <label for="backgroundSelect">選擇背景:</label>
+        <select id="backgroundSelect" onchange="changeBackground()">
+            <option value="night">夜空</option>
+            <option value="forest">森林</option>
+            <option value="city">城市</option>
+        </select>
+    </div>
+    <canvas id="brickBreaker" width="480" height="600"></canvas>
+
+    <div id="gameOverMenu">
+        <h1>遊戲結束</h1>
+        <button onclick="showDifficultyMenu()">回到選擇難度</button>
+    </div>
+
+    <div id="timerDisplay">Time Left: 120s</div> <!-- 倒數計時顯示 -->
+
+    <script src="game.js"></script>
+    <script>
+        // 添加事件監聽器
+        document.getElementById("infoIcon").onclick = function() {
+            const introText = document.getElementById("introText");
+            // 切換顯示狀態
+            if (introText.style.display === "none") {
+                introText.style.display = "block"; // 顯示介紹文本
+            } else {
+                introText.style.display = "none"; // 隱藏介紹文本
+            }
+        };
+    </script>
+</body>
+</html>
